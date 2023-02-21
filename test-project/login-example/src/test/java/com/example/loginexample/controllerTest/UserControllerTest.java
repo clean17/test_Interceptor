@@ -1,24 +1,26 @@
 package com.example.loginexample.controllerTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.servlet.http.HttpSession;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.loginexample.model.User;
-import com.example.loginexample.model.UserRepository;
 
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
@@ -27,8 +29,19 @@ public class UserControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @Autowired
-    private UserRepository userRepository;
+    private MockHttpSession session;
+
+    @BeforeEach
+    public void setUp(){
+        User mockUser = new User();
+        mockUser.setId(2);
+        mockUser.setUsername("ssar");
+        mockUser.setPassword("1234");
+        mockUser.setEmail("ssar@nate.com");
+
+        session = new MockHttpSession();
+        session.setAttribute("principal", mockUser);
+    }
 
     @Transactional
     @Test
@@ -59,5 +72,14 @@ public class UserControllerTest {
         User userPS = (User) session.getAttribute("principal");
         assertThat(userPS.getUsername()).isEqualTo("ssar");
         assertThat(userPS.getPassword()).isEqualTo("1234");
+    }
+
+    @Transactional
+    @Test
+    public void main_test() throws Exception {
+        ResultActions rs = mvc.perform(get("/").session(session));
+        MvcResult mvc =  rs.andExpect(status().isOk()).andReturn();
+        String result = mvc.getResponse().getForwardedUrl();
+        assertThat(result).isEqualTo("/WEB-INF/view/user/main.jsp");
     }
 }
