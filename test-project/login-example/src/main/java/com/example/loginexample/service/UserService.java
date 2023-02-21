@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.loginexample.Util.Sha256;
 import com.example.loginexample.dto.UserReq.UserJoinReqDto;
 import com.example.loginexample.dto.UserReq.UserLoginReqDto;
 import com.example.loginexample.exception.CustomException;
@@ -22,6 +23,7 @@ public class UserService {
 
     @Transactional
     public void 회원가입(UserJoinReqDto userDto){
+        userDto.setPassword(Sha256.encode(userDto.getPassword()));
         User sameUser = userRepository.findByUsername(userDto.getUsername());
         if (sameUser != null) {
             throw new CustomException("동일한 username이 존재합니다");
@@ -36,6 +38,7 @@ public class UserService {
 
     @Transactional
     public User 로그인(UserLoginReqDto userDto){
+        userDto.setPassword(Sha256.encode(userDto.getPassword()));
         User principal = userRepository.findByUsernameAndPassword(userDto);
         if ( principal == null ){
             throw new CustomException("아이디 또는 비밀번호가 틀렸습니다.");  
