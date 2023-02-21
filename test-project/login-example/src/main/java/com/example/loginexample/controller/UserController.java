@@ -31,7 +31,7 @@ public class UserController {
     if( principal == null ){
         return "redirect:/login";
     }
-        return "/";
+        return "user/main";
     }
     
     @GetMapping("/update")

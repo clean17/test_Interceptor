@@ -79,7 +79,7 @@
                             </div>
                             <div class="ms-5 my-auto">
                                 <a href="/user/profileUpdateForm"><img
-                                        src="${principal.profile == null ? '/images/default_profile.png' : principal.profile}"
+                                        src="/images/default_profile.png"
                                         style="width: 35px;" class="rounded-circle" alt="Cinque Terre"></a>
                             </div>
                         </div>
@@ -87,18 +87,4 @@
 
                 </div>
             </nav>
-            <script>
-                function searchBox() {
-                    $('#search-header').css('display')
-                    const searchHeader = document.getElementById("search-header");
-                    if (searchHeader.style.display === "none") {
-                        searchHeader.style.display = "block";
-                        searchHeader.focus();
-                        }
-                    }
-                function searchEvt(){
-                    const keyword = $('#search-header').val();
-                    console.log(keyword);
-                    location.href="/search?keyword="+keyword;
-                }
-            </script>
+       
