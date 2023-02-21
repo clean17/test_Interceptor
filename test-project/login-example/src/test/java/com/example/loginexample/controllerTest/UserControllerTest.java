@@ -1,7 +1,10 @@
 package com.example.loginexample.controllerTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import javax.servlet.http.HttpSession;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.loginexample.model.User;
 import com.example.loginexample.model.UserRepository;
 
 @AutoConfigureMockMvc
@@ -36,12 +41,23 @@ public class UserControllerTest {
         rs.andExpect(status().is3xxRedirection());
     }
 
+    @Transactional
     @Test
     public void userLogin_test() throws Exception{
+        //given
         String resp = "username=ssar&password=1234";
+        // Body = <script>alert('아이디를 입력하세요');history.back();</script>
+        // Body = <script>alert('패스워드를 입력하세요');history.back();</script>
+        // Body = <script>alert('아이디 또는 비밀번호가 틀렸습니다.');history.back();</script>
 
+        //when
         ResultActions rs = mvc.perform(post("/login").content(resp).contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
-
-        rs.andExpect(status().is3xxRedirection());
+    
+        //then
+        MvcResult mvcResult = rs.andExpect(status().is3xxRedirection()).andReturn();
+        HttpSession session =  mvcResult.getRequest().getSession();
+        User userPS = (User) session.getAttribute("principal");
+        assertThat(userPS.getUsername()).isEqualTo("ssar");
+        assertThat(userPS.getPassword()).isEqualTo("1234");
     }
 }
