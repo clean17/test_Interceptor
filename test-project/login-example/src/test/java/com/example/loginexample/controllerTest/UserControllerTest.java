@@ -12,9 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import com.example.loginexample.dto.UserReq.UserJoinReqDto;
-import com.example.loginexample.dto.UserReq.UserLoginReqDto;
-import com.example.loginexample.model.User;
 import com.example.loginexample.model.UserRepository;
 
 @AutoConfigureMockMvc
