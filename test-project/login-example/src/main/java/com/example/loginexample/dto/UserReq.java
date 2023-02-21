@@ -1,9 +1,11 @@
 package com.example.loginexample.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 public class UserReq {
+    @AllArgsConstructor
     @Getter
     @Setter
     public static class UserJoinDto{
@@ -17,6 +19,7 @@ public class UserReq {
         private String username;
         private String password;
     }
+    
     @Getter
     @Setter
     public static class UserUpdateReqDto{
