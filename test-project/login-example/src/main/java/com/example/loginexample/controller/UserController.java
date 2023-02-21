@@ -31,7 +31,7 @@ public class UserController {
     if( principal == null ){
         return "redirect:/login";
     }
-        return "/";
+        return "user/main";
     }
     
     @GetMapping("/update")
@@ -81,8 +81,8 @@ public class UserController {
         if( userDto.getPassword()==null||userDto.getPassword().isEmpty()){
             throw new CustomException("패스워드를 입력하세요");
         }
-        // User prinipal = service.로그인(userDto);
-        // session.setAttribute("principal", prinipal);         
+        User prinipal = service.로그인(userDto);
+        session.setAttribute("principal", prinipal);      
         return "redirect:/";
     }
 
