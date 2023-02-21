@@ -8,7 +8,6 @@
                 <div class="d-flex form-floating mb-2 h-10">
                     <input type="text" name="username" class="form-control" placeholder="Enter username" id="username" required>
                     <label for="username">Username</label>
-                    <button type="button" class="badge bg-secondary ms-2" id="usernameCheck" onclick="sameCheck()">중복확인</button>
                 </div>
             </div>
                 <div class="form-group mb-2">
@@ -52,35 +51,12 @@
         }
     })
     function valid() {
-        if (joinOk) {
-            if ($('#password').val() === $('#passwordCheck').val()) {
-                return true;
-            } else {
-                alert('패스워드가 다릅니다')
-                return false;
-            }
+        if ($('#password').val() === $('#passwordCheck').val()) {
+            return true;
         } else {
-            alert('아이디 중복확인이 필요합니다'); // 회원가입 버튼누르면 뜬다                     				
+            alert('패스워드가 다릅니다')
             return false;
         }
     }
-    $('#usernameCheck').click(() => {
-        let username = $('#username').val();
-        $.ajax({
-            type: "get",
-            url: "/user/usernameSameCheck?username=" + username
-            // dataType: "json"
-        }).done((res) => {
-            if (res.data === true) {
-                alert(res.msg);
-                joinOk = true;
-            } else {
-                alert(res.msg);
-                joinOk = false;
-            }
-        }).fail((err) => {
-            alert('실패');
-        });
-    });
 </script>
 <%@ include file="../layout/footer.jsp" %>

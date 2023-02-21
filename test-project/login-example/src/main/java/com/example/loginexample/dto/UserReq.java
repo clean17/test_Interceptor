@@ -8,14 +8,15 @@ public class UserReq {
     @AllArgsConstructor
     @Getter
     @Setter
-    public static class UserJoinDto{
+    public static class UserJoinReqDto{
         private String username;
         private String password;
         private String email;
     }
+    @AllArgsConstructor
     @Getter
     @Setter
-    public static class UserLoginDto{
+    public static class UserLoginReqDto{
         private String username;
         private String password;
     }

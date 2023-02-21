@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.example.loginexample.dto.UserReq.UserJoinDto;
-import com.example.loginexample.dto.UserReq.UserLoginDto;
+import com.example.loginexample.dto.UserReq.UserJoinReqDto;
+import com.example.loginexample.dto.UserReq.UserLoginReqDto;
 import com.example.loginexample.dto.UserReq.UserUpdateReqDto;
 
 @Mapper
@@ -15,9 +15,11 @@ public interface UserRepository {
 
     public User findById(int id);
 
-    public User findByUsernameAndPassword(@Param("uDto") UserLoginDto uDto);
+    public User findByUsernameAndPassword(@Param("uDto") UserLoginReqDto uDto);
 
-    public int insert(@Param("uDto") UserJoinDto uDto);
+    public User findByUsername(String username);
+
+    public int insert(@Param("uDto") UserJoinReqDto uDto);
 
     public int updateById(@Param("uDto") UserUpdateReqDto uDto);
 

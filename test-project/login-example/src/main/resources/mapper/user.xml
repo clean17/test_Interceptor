@@ -16,6 +16,10 @@
         select * from user_tb where username = #{uDto.username} and password = #{uDto.password}
     </select>
 
+    <select id="findByUsername" resultType="com.example.loginexample.model.User">
+        select * from user_tb where username = #{username}
+    </select>
+
 
     <insert id="insert">
         insert into user_tb (username, password, email, enabled) 
