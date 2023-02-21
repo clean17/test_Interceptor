@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.loginexample.model.UserRepository;
 
@@ -24,6 +25,7 @@ public class UserControllerTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     @Test
     public void userJoin_test() throws Exception{
         // String resp = "username=ssar&password=1234&email=ss321@nate.com"; 
