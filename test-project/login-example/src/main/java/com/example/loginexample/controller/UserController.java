@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.example.loginexample.Util.Sha256;
 import com.example.loginexample.dto.UserReq.UserJoinReqDto;
 import com.example.loginexample.dto.UserReq.UserLoginReqDto;
 import com.example.loginexample.exception.CustomException;
@@ -84,6 +87,13 @@ public class UserController {
         User prinipal = service.로그인(userDto);
         session.setAttribute("principal", prinipal);      
         return "redirect:/";
+    }
+
+    @GetMapping("/t")
+    @ResponseBody
+    public String tte(){
+    
+        return "z ";
     }
 
 
